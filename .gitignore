@@ -1,0 +1,8 @@
+.git/
+.idea/
+/vendor/
+/build
+/test-reports
+/.phpunit.cache
+/src/index.php
+/nbproject/
