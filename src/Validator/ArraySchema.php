@@ -7,6 +7,7 @@ use Hexlet\Validator\AbstractSchema;
 
 class ArraySchema extends AbstractSchema implements ArraySchemaInterface
 {
+    private ?array $shapeSchemas = null;
     
     public function __construct() 
     {
@@ -36,5 +37,33 @@ class ArraySchema extends AbstractSchema implements ArraySchemaInterface
     public function isValid($value): bool 
     {
         return $this->validateBase($value);
+    }
+    
+    public function shape(array $schemas): self
+    {
+        $this->shapeSchemas = $schemas;
+        $this->addValidator('shape', function (array $value) {
+            if ($this->shapeSchemas === null) {
+                return true;
+            }
+
+            foreach ($this->shapeSchemas as $key => $schema) {
+                if (!array_key_exists($key, $value)) {
+                    // Ключ отсутствует - проверяем, требуется ли он в схеме
+                    if (method_exists($schema, 'isRequired') && $schema->isRequired()) {
+                        return false;
+                    }
+                    continue;
+                }
+
+                if (!$schema->isValid($value[$key])) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        return $this;
     }
 }

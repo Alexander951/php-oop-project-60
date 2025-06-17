@@ -36,4 +36,9 @@ abstract class AbstractSchema implements SchemaInterface
 
         return true;
     }
+    
+    public function isRequired(): bool
+    {
+        return !$this->nullable;
+    }
 }

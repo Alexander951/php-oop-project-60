@@ -10,4 +10,5 @@ interface ArraySchemaInterface extends SchemaInterface
 {
     public function required(): self;
     public function sizeof (int $size): self;
+    public function shape(array $schemas): self;
 }

@@ -51,4 +51,35 @@ class ArrayValidatorTest extends TestCase
         $this->assertFalse($schema->isValid(['hexlet']));
         $this->assertTrue($schema->isValid(['hexlet', 'code-basics']));
     }
+    
+    public function testShapeValidation(): void
+{
+    $schema = $this->validator->array()->shape([
+        'name' => $this->validator->string()->required(),
+        'age' => $this->validator->number()->positive(),
+    ]);
+
+    // Valid cases
+    $this->assertTrue($schema->isValid(['name' => 'kolya', 'age' => 100]));
+    $this->assertTrue($schema->isValid(['name' => 'maya', 'age' => null]));
+
+    // Invalid cases
+    $this->assertFalse($schema->isValid(['name' => '', 'age' => null]));
+    $this->assertFalse($schema->isValid(['name' => 'ada', 'age' => -5]));
+    $this->assertFalse($schema->isValid(['age' => 10])); // missing required name
+    $this->assertFalse($schema->isValid(['name' => 'bob'])); // age missing but positive() implies required
+}
+
+    public function testShapeWithNullable(): void
+    {
+        $schema = $this->validator->array()->shape([
+            'profile' => $this->validator->array()->shape([
+                'name' => $this->validator->string()->required()
+            ])
+        ]);
+
+        $this->assertTrue($schema->isValid(['profile' => ['name' => 'alice']]));
+        $this->assertTrue($schema->isValid(['profile' => null]));
+        $this->assertFalse($schema->isValid(['profile' => ['name' => '']]));
+    }
 }
