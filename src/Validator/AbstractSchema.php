@@ -58,7 +58,7 @@ abstract class AbstractSchema implements SchemaInterface
     // Получения типа схемы
     abstract protected function getType(): string;
 
-    public function test(string $validatorName, mixed ...$args): self
+    public function test(string $validatorName, mixed ...$args): SchemaInterface
     {
         $customValidators = $this->validator->getCustomValidators($this->getType());
 
