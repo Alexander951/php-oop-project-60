@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Hexlet\Validator;
 
+use Hexlet\Interfaces\ValidatorInterface;
 use Hexlet\Validator\StringSchema;
 use Hexlet\Interfaces\StringSchemaInterface;
-use Hexlet\Interfaces\ValidatorInterface;
+use Hexlet\Validator\NumberSchema;
 use Hexlet\Interfaces\NumberSchemaInterface;
+use Hexlet\Validator\ArraySchema;
+use Hexlet\Interfaces\ArraySchemaInterface;
 
 class Validator implements ValidatorInterface
 {
@@ -19,5 +22,10 @@ class Validator implements ValidatorInterface
     public function number(): NumberSchemaInterface
     {
         return new NumberSchema();
+    }
+    
+    public function array(): ArraySchemaInterface
+    {
+        return new ArraySchema();
     }
 }
