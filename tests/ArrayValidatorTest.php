@@ -75,7 +75,7 @@ class ArrayValidatorTest extends TestCase
         $schema = $this->validator->array()->shape([
                 'profile' => $this->validator->array()->shape([
                 'name' => $this->validator->string()->required()
-            ])
+                ])
         ]);
 
         $this->assertTrue($schema->isValid(['profile' => ['name' => 'alice']]));
