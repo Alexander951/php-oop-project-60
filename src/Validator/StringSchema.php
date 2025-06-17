@@ -9,8 +9,9 @@ use Hexlet\Validator\AbstractSchema;
 
 class StringSchema extends AbstractSchema implements StringSchemaInterface
 {
-    public function __construct()
+    public function __construct(Validator $validator)
     {
+        parent::__construct($validator);
         $this->addValidator('type', function ($value) {
             return $value === null || is_string($value);
         });
@@ -44,5 +45,14 @@ class StringSchema extends AbstractSchema implements StringSchemaInterface
     public function isValid($value): bool
     {
         return $this->validateBase($value);
+    }
+    
+    protected function getType(): string
+    {
+        return 'string';
+    }
+    
+    protected function isValidType($value): bool {
+        return is_string($value);
     }
 }

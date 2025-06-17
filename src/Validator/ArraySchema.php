@@ -9,8 +9,9 @@ class ArraySchema extends AbstractSchema implements ArraySchemaInterface
 {
     private ?array $shapeSchemas = null;
     
-    public function __construct() 
+    public function __construct(Validator $validator) 
     {
+        parent::__construct($validator);
         $this->addValidator('type', function($value) {
             return $value === null || is_array($value);
         });
@@ -42,15 +43,22 @@ class ArraySchema extends AbstractSchema implements ArraySchemaInterface
     public function shape(array $schemas): self
     {
         $this->shapeSchemas = $schemas;
-        $this->addValidator('shape', function (array $value) {
+        $this->addValidator('shape', function ($value) {
             if ($this->shapeSchemas === null) {
                 return true;
             }
 
+            if ($value === null) {
+                return $this->nullable;
+            }
+
+            if (!is_array($value)) {
+                return false;
+            }
+
             foreach ($this->shapeSchemas as $key => $schema) {
                 if (!array_key_exists($key, $value)) {
-                    // Ключ отсутствует - проверяем, требуется ли он в схеме
-                    if (method_exists($schema, 'isRequired') && $schema->isRequired()) {
+                    if ($schema->isRequired()) {
                         return false;
                     }
                     continue;
@@ -65,5 +73,14 @@ class ArraySchema extends AbstractSchema implements ArraySchemaInterface
         });
 
         return $this;
+    }
+    
+    protected function getType(): string
+    {
+        return 'array';
+    }
+    
+    protected function isValidType($value): bool {
+        return is_array($value);
     }
 }

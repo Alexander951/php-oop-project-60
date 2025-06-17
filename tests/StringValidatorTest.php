@@ -81,4 +81,15 @@ class StringValidatorTest extends TestCase
         $this->assertFalse($schema->isValid('')); // Empty
         $this->assertFalse($schema->isValid(null)); // Null
     }
+    
+    public function testCustomStringValidator(): void
+    {
+        $v = new Validator();
+        $v->addValidator('string', 'startWith', fn($value, $start) => str_starts_with($value, $start));
+
+        $schema = $v->string()->test('startWith', 'H');
+        $this->assertFalse($schema->isValid('exlet'));
+        $this->assertTrue($schema->isValid('Hexlet'));
+        $this->assertTrue($schema->isValid(null)); // null allowed by default
+    }
 }

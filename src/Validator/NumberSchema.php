@@ -9,10 +9,11 @@ use Hexlet\Validator\AbstractSchema;
 
 class NumberSchema extends AbstractSchema implements NumberSchemaInterface
 {
-    public function __construct()
+    public function __construct(Validator $validator)
     {
+        parent::__construct($validator);
         $this->addValidator('type', function ($value) {
-            return $value === null || is_int($value);
+            return $value === null || is_numeric($value);
         });
     }
 
@@ -20,7 +21,7 @@ class NumberSchema extends AbstractSchema implements NumberSchemaInterface
     {
         $this->nullable(false);
         $this->addValidator('required', function ($value) {
-            return is_int($value);
+            return is_numeric($value);
         });
         return $this;
     }
@@ -28,7 +29,7 @@ class NumberSchema extends AbstractSchema implements NumberSchemaInterface
     public function positive(): self
     {
         $this->addValidator('positive', function ($value) {
-            return $value === null || ($value > 0);
+            return $value === null || $value > 0;
         });
         return $this;
     }
@@ -44,5 +45,14 @@ class NumberSchema extends AbstractSchema implements NumberSchemaInterface
     public function isValid($value): bool
     {
         return $this->validateBase($value);
+    }
+    
+    protected function getType(): string
+    {
+        return 'number';
+    }
+    
+    protected function isValidType($value): bool {
+        return is_numeric($value);
     }
 }
