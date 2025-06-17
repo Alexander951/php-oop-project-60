@@ -81,7 +81,7 @@ class StringValidatorTest extends TestCase
         $this->assertFalse($schema->isValid('')); // Empty
         $this->assertFalse($schema->isValid(null)); // Null
     }
-    
+
     public function testCustomStringValidator(): void
     {
         $v = new Validator();

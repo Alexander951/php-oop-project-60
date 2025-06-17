@@ -8,14 +8,13 @@ use Hexlet\Validator\AbstractSchema;
 class ArraySchema extends AbstractSchema implements ArraySchemaInterface
 {
     private ?array $shapeSchemas = null;
-    
-    public function __construct(Validator $validator) 
+
+    public function __construct(Validator $validator)
     {
         parent::__construct($validator);
-        $this->addValidator('type', function($value) {
+        $this->addValidator('type', function ($value) {
             return $value === null || is_array($value);
         });
-        return $this;
     }
 
     public function required(): self
@@ -26,7 +25,7 @@ class ArraySchema extends AbstractSchema implements ArraySchemaInterface
         });
         return $this;
     }
-    
+
     public function sizeof(int $size): self
     {
         $this->addValidator('sizeof', function ($value) use ($size) {
@@ -35,11 +34,11 @@ class ArraySchema extends AbstractSchema implements ArraySchemaInterface
         return $this;
     }
 
-    public function isValid($value): bool 
+    public function isValid(mixed $value): bool
     {
         return $this->validateBase($value);
     }
-    
+
     public function shape(array $schemas): self
     {
         $this->shapeSchemas = $schemas;
@@ -74,13 +73,14 @@ class ArraySchema extends AbstractSchema implements ArraySchemaInterface
 
         return $this;
     }
-    
+
     protected function getType(): string
     {
         return 'array';
     }
-    
-    protected function isValidType($value): bool {
+
+    protected function isValidType(mixed $value): bool
+    {
         return is_array($value);
     }
 }

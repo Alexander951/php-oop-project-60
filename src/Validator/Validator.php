@@ -19,7 +19,7 @@ class Validator implements ValidatorInterface
         'number' => [],
         'array' => []
     ];
-    
+
     public function addValidator(string $type, string $name, callable $fn): void
     {
         if (!array_key_exists($type, $this->customValidators)) {
@@ -32,17 +32,17 @@ class Validator implements ValidatorInterface
     {
         return $this->customValidators[$type] ?? [];
     }
-    
+
     public function string(): StringSchemaInterface
     {
         return new StringSchema($this);
     }
-    
+
     public function number(): NumberSchemaInterface
     {
         return new NumberSchema($this);
     }
-    
+
     public function array(): ArraySchemaInterface
     {
         return new ArraySchema($this);

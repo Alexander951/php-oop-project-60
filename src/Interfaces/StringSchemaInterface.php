@@ -11,4 +11,5 @@ interface StringSchemaInterface extends SchemaInterface
     public function required(): self;
     public function minLength(int $length): self;
     public function contains(string $substring): self;
+    public function test(string $validatorName, mixed ...$args): self;
 }

@@ -51,7 +51,7 @@ class ArrayValidatorTest extends TestCase
         $this->assertFalse($schema->isValid(['hexlet']));
         $this->assertTrue($schema->isValid(['hexlet', 'code-basics']));
     }
-    
+
     public function testShapeValidation(): void
     {
         $schema = $this->validator->array()->shape([

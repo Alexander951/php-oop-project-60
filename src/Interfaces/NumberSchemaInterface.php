@@ -11,4 +11,5 @@ interface NumberSchemaInterface extends SchemaInterface
     public function required(): self;
     public function positive(): self;
     public function range(int $min, int $max): self;
+    public function test(string $validatorName, mixed ...$args): self;
 }

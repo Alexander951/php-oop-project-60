@@ -6,5 +6,5 @@ namespace Hexlet\Interfaces;
 
 interface SchemaInterface
 {
-    public function isValid($value): bool;
+    public function isValid(mixed $value): bool;
 }

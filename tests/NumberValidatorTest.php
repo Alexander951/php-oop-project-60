@@ -36,7 +36,7 @@ class NumberValidatorTest extends TestCase
     {
         $schema = $this->validator->number()->positive();
 
-        $this->assertTrue($schema->isValid(null)); 
+        $this->assertTrue($schema->isValid(null));
         $this->assertFalse($schema->isValid(0));
         $this->assertFalse($schema->isValid(-10));
         $this->assertTrue($schema->isValid(10));
@@ -46,7 +46,7 @@ class NumberValidatorTest extends TestCase
     {
         $schema = $this->validator->number()->range(-5, 5);
 
-        $this->assertTrue($schema->isValid(null)); 
+        $this->assertTrue($schema->isValid(null));
         $this->assertTrue($schema->isValid(-5));
         $this->assertTrue($schema->isValid(5));
         $this->assertFalse($schema->isValid(-6));
@@ -68,7 +68,7 @@ class NumberValidatorTest extends TestCase
         $this->assertTrue($schema->isValid(10));
         $this->assertFalse($schema->isValid(11));
     }
-    
+
     public function testCustomNumberValidator(): void
     {
         $v = new Validator();
@@ -79,7 +79,7 @@ class NumberValidatorTest extends TestCase
         $this->assertTrue($schema->isValid(6));
         $this->assertTrue($schema->isValid(null)); // null allowed by default
     }
-    
+
     public function testRequiredWithCustomValidator(): void
     {
         $v = new Validator();

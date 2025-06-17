@@ -42,17 +42,18 @@ class StringSchema extends AbstractSchema implements StringSchemaInterface
         return $this;
     }
 
-    public function isValid($value): bool
+    public function isValid(mixed $value): bool
     {
         return $this->validateBase($value);
     }
-    
+
     protected function getType(): string
     {
         return 'string';
     }
-    
-    protected function isValidType($value): bool {
+
+    protected function isValidType(mixed $value): bool
+    {
         return is_string($value);
     }
 }

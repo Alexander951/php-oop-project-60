@@ -41,18 +41,19 @@ class NumberSchema extends AbstractSchema implements NumberSchemaInterface
         });
         return $this;
     }
-    
-    public function isValid($value): bool
+
+    public function isValid(mixed $value): bool
     {
         return $this->validateBase($value);
     }
-    
+
     protected function getType(): string
     {
         return 'number';
     }
-    
-    protected function isValidType($value): bool {
+
+    protected function isValidType(mixed $value): bool
+    {
         return is_numeric($value);
     }
 }
