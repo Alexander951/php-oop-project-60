@@ -1,0 +1,71 @@
+<?php
+
+namespace Hexlet\Validator\Tests;
+
+use PHPUnit\Framework\TestCase;
+use Hexlet\Validator\Validator;
+
+class NumberValidatorTest extends TestCase
+{
+    private Validator $validator;
+
+    protected function setUp(): void
+    {
+        $this->validator = new Validator();
+    }
+
+    public function testBasicValidation(): void
+    {
+        $schema = $this->validator->number();
+
+        $this->assertTrue($schema->isValid(null));
+        $this->assertTrue($schema->isValid(0));
+        $this->assertTrue($schema->isValid(10));
+    }
+
+    public function testRequired(): void
+    {
+        $schema = $this->validator->number()->required();
+
+        $this->assertFalse($schema->isValid(null));
+        $this->assertTrue($schema->isValid(0));
+        $this->assertTrue($schema->isValid(10));
+    }
+
+    public function testPositive(): void
+    {
+        $schema = $this->validator->number()->positive();
+
+        $this->assertTrue($schema->isValid(null)); 
+        $this->assertFalse($schema->isValid(0));
+        $this->assertFalse($schema->isValid(-10));
+        $this->assertTrue($schema->isValid(10));
+    }
+
+    public function testRange(): void
+    {
+        $schema = $this->validator->number()->range(-5, 5);
+
+        $this->assertTrue($schema->isValid(null)); 
+        $this->assertTrue($schema->isValid(-5));
+        $this->assertTrue($schema->isValid(5));
+        $this->assertFalse($schema->isValid(-6));
+        $this->assertFalse($schema->isValid(6));
+    }
+
+    public function testCombinedValidators(): void
+    {
+        $schema = $this->validator->number()
+            ->required()
+            ->positive()
+            ->range(5, 10);
+
+        $this->assertFalse($schema->isValid(null));
+        $this->assertFalse($schema->isValid(0));
+        $this->assertFalse($schema->isValid(4));
+        $this->assertTrue($schema->isValid(5));
+        $this->assertTrue($schema->isValid(7));
+        $this->assertTrue($schema->isValid(10));
+        $this->assertFalse($schema->isValid(11));
+    }
+}

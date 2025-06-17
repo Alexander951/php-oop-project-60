@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hexlet\Validator;
 
 use Hexlet\Interfaces\StringSchemaInterface;
+use Hexlet\Validator\AbstractSchema;
 
 class StringSchema extends AbstractSchema implements StringSchemaInterface
 {
