@@ -73,7 +73,7 @@ class ArrayValidatorTest extends TestCase
     public function testShapeWithNullable(): void
     {
         $schema = $this->validator->array()->shape([
-            'profile' => $this->validator->array()->shape([
+                'profile' => $this->validator->array()->shape([
                 'name' => $this->validator->string()->required()
             ])
         ]);
